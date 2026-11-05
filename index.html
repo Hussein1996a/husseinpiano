@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>أكاديمية البيانو · hussein piano</title>
+<meta name="description" content="أكاديمية البيانو: دروس نظرية موسيقية، بيانو تفاعلي، تدريب على المقطوعات واختبار قراءة النوت بالعربية">
+<meta name="theme-color" content="#b8862b">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f2ea;--fg:#1d1b18;--mut:#6b655b;--card:#fff;--ac:#b8862b;--bd:#e3dccd;--wk:#fffdf8;--bk:#1b1a18;--hint:#f4c95d;--on:#e0a526;--ok:#2f8f5b;--bad:#c2453a;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141311;--fg:#f1ece2;--mut:#a39b8c;--card:#1f1d1a;--ac:#e0a93f;--bd:#34302a;--wk:#ece6d8;--bk:#0b0a09;--hint:#b98a1f;--on:#e0a526;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#141311;--fg:#f1ece2;--mut:#a39b8c;--card:#1f1d1a;--ac:#e0a93f;--bd:#34302a;--wk:#ece6d8;--bk:#0b0a09;--hint:#b98a1f;--on:#e0a526;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:Cairo,"Segoe UI",Tahoma,sans-serif;line-height:1.8;padding-bottom:250px}
+header{padding:18px 16px 6px;text-align:center}
+h1{margin:0;font-size:1.7rem;font-weight:800;color:var(--ac)}
+header p{margin:0;color:var(--mut);font-size:.95rem}
+.tabs{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;padding:10px}
+.tab,.btn,.chip{font:inherit;border:1px solid var(--bd);background:var(--card);color:var(--fg);border-radius:12px;padding:6px 16px;cursor:pointer}
+.tab.a,.chip.a,.btn.p{background:var(--ac);color:#fff;border-color:var(--ac)}
+.chip{padding:2px 12px;min-width:38px}.chip.d::after{content:" ✓";color:var(--ok)}.chip.a.d::after{color:#fff}
+main{max-width:820px;margin:0 auto;padding:6px 16px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:18px;padding:16px 20px;margin-top:8px}
+h2{margin:.4em 0;font-size:1.3rem}
+.chips,.demos,.nav{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0}
+.nav{justify-content:space-between}
+.staff{width:100%;max-width:420px;height:auto;display:block;margin:8px auto;direction:ltr}
+.staff line{stroke:var(--fg);stroke-width:1.2}.staff ellipse{fill:var(--fg)}.staff text{fill:var(--fg)}
+.clef{font-family:"Noto Music","Segoe UI Symbol","Apple Symbols",serif}
+.st{font-size:1.05rem;min-height:2em}
+.inp{width:100%;font:inherit;background:var(--bg);color:var(--fg);border:1px solid var(--bd);border-radius:10px;padding:8px 12px;margin:6px 0}
+.ok{color:var(--ok);font-weight:600}.bad{color:var(--bad);font-weight:600}
+.note{background:var(--bg);border-radius:10px;padding:8px 12px;font-size:.92rem;color:var(--mut)}
+input[type=range]{width:100%;accent-color:var(--ac)}
+.dots{display:flex;gap:10px;justify-content:center;margin:12px 0}
+.dot{width:22px;height:22px;border-radius:50%;background:var(--bd)}.dot.on{background:var(--ac)}
+.dock{position:fixed;inset:auto 0 0 0;background:var(--card);border-top:1px solid var(--bd);padding:6px 0 calc(6px + env(safe-area-inset-bottom,0px));direction:ltr}
+.dk{display:flex;justify-content:space-between;align-items:center;padding:0 12px 6px;font-size:.85rem;color:var(--mut);direction:rtl}
+.sc{overflow-x:auto;direction:ltr;-webkit-overflow-scrolling:touch}
+#piano{--w:clamp(46px,calc((100vw - 16px)/21),72px);--bw:calc(var(--w)*.62);position:relative;display:flex;width:calc(21*var(--w));height:170px;touch-action:pan-x;user-select:none}
+.k{position:relative;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:4px 0;font-size:.7rem}
+.w{width:var(--w);height:100%;background:var(--wk);border:1px solid #8d867a;border-radius:0 0 7px 7px;color:#444}
+.b{position:absolute;top:0;width:var(--bw);height:62%;background:var(--bk);border-radius:0 0 5px 5px;z-index:2;color:#bbb}
+.k.hint{background:var(--hint)}.b.hint{background:var(--hint);color:#000}
+.k.on{background:var(--on)!important}
+.k .t{opacity:.6}.k .n{font-weight:600;font-size:.72rem}.nl .n{visibility:hidden}
+body{background:radial-gradient(circle at 15% 0%,color-mix(in srgb,var(--ac) 22%,transparent),transparent 45%),radial-gradient(circle at 90% 30%,color-mix(in srgb,var(--ac) 12%,transparent),transparent 40%),var(--bg);background-attachment:fixed}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:30;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(14px)}
+:focus-visible{outline:3px solid var(--ac);outline-offset:2px}
+.skip{position:absolute;inset-inline-start:8px;top:-60px;background:var(--ac);color:#fff;padding:6px 14px;border-radius:8px;z-index:50}.skip:focus{top:8px}
+.tg{position:absolute;inset-inline-start:12px;top:10px;z-index:31;width:44px;height:44px;border-radius:50%;border:1px solid var(--bd);background:var(--card);color:var(--fg);font-size:1.2rem;cursor:pointer}
+h1{font-size:2.2rem;letter-spacing:.5px;background:linear-gradient(135deg,var(--ac),#f5d98a 50%,var(--ac));-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 4px 6px rgba(0,0,0,.25))}
+h1 small{font-size:.42em;-webkit-text-fill-color:var(--mut)}
+.hero{height:175px;perspective:900px;display:flex;justify-content:center;align-items:center;margin-top:6px}
+.ring{position:relative;width:62px;height:98px;transform-style:preserve-3d;animation:spin 22s linear infinite}
+.hero:hover .ring{animation-play-state:paused}
+.ring i{position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;padding-bottom:8px;font-style:normal;font-weight:800;color:#3a2a08;border-radius:8px 8px 16px 16px;background:linear-gradient(#fff,#f1e6c9 80%,#d4b66a);box-shadow:0 8px 20px rgba(0,0,0,.35);cursor:pointer;transform:rotateY(calc(var(--i)*51.43deg)) translateZ(125px)}
+.ring i:active{filter:brightness(.88)}
+@keyframes spin{from{transform:rotateX(-14deg) rotateY(0)}to{transform:rotateX(-14deg) rotateY(360deg)}}
+.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 72%,transparent);border-bottom:1px solid var(--bd)}
+.tab,.btn{min-height:44px;transition:transform .15s,box-shadow .15s}.tab:hover,.btn:hover{transform:translateY(-2px)}
+.tab.a{box-shadow:0 4px 14px color-mix(in srgb,var(--ac) 55%,transparent)}
+.card{backdrop-filter:blur(8px);box-shadow:0 12px 30px rgba(0,0,0,.12),inset 0 1px 0 rgba(255,255,255,.35);transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));transition:transform .2s ease}
+.dock{backdrop-filter:blur(16px);background:color-mix(in srgb,var(--card) 82%,transparent);box-shadow:0 -10px 30px rgba(0,0,0,.18)}
+.w{background:linear-gradient(180deg,#fff 0,var(--wk) 80%,#d8cfbb 100%);border:1px solid #9a9181;border-top:0;box-shadow:inset 0 -10px 8px -6px rgba(0,0,0,.18),0 4px 5px rgba(0,0,0,.3);transition:transform .06s}
+.b{background:linear-gradient(180deg,#4a4743 0,#111 18%,var(--bk) 90%,#2b2926);box-shadow:inset 1px 0 0 rgba(255,255,255,.12),0 6px 8px rgba(0,0,0,.55);transition:transform .06s}
+.k.on{transform:translateY(2px);background:linear-gradient(180deg,#f7d27a,var(--on))!important}
+.b.on{background:linear-gradient(180deg,#a0731a,#5a3e0a)!important}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+button,.k,.chip{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+#piano{touch-action:none}
+.mini{min-width:44px;min-height:40px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--fg);font-size:1rem;cursor:pointer;margin-inline-start:4px}
+.dk{gap:8px}
+.big #piano{--w:60px;--bw:36px;height:min(52vh,340px)}body.big{padding-bottom:calc(min(52vh,340px) + 100px)}
+.ft{text-align:center;color:var(--mut);font-size:.85rem;padding:18px 0 8px}
+@media (max-width:640px){body{padding-bottom:280px}h1{font-size:1.6rem}.hero{height:125px}.ring{width:50px;height:78px}.ring i{transform:rotateY(calc(var(--i)*51.43deg)) translateZ(100px);font-size:.85rem}main{padding:6px 10px}.card{padding:14px}#piano{--w:52px;--bw:32px;height:190px}.hd{display:none}.tabs{flex-wrap:nowrap;overflow-x:auto;justify-content:flex-start}.tab{flex:0 0 auto;white-space:nowrap}.demos .btn{flex:1 1 auto}}
+@media (max-height:480px) and (orientation:landscape){.hero{display:none}#piano{height:125px}body{padding-bottom:200px}}
+html{-webkit-text-size-adjust:100%}
+:root{padding-inline:env(safe-area-inset-left,0px) env(safe-area-inset-right,0px)}
+.card,.chip,.btn{overflow-wrap:anywhere}img,svg,canvas{max-width:100%}
+#piano{-webkit-touch-callout:none}
+.dock{padding-inline:env(safe-area-inset-left,0px) env(safe-area-inset-right,0px)}
+.day{display:block;width:100%;text-align:right;margin:4px 0;white-space:normal}
+.bar{height:10px;background:var(--bd);border-radius:6px;overflow:hidden;margin:8px 0}.bar i{display:block;height:100%;background:var(--ac);transition:width .3s}
+@supports (height:1dvh){.big #piano{height:min(52dvh,340px)}}
+@media (min-width:900px) and (min-height:560px){#piano{height:220px}body{padding-bottom:310px}.hero{height:200px}.ring{width:70px;height:110px}.ring i{transform:rotateY(calc(var(--i)*51.43deg)) translateZ(150px);font-size:1.1rem}}
+@media (min-width:1100px){main{max-width:980px}h1{font-size:2.6rem}}
+@media (max-width:360px){h1{font-size:1.35rem}.hero{height:110px}.ring{width:44px;height:68px}.ring i{transform:rotateY(calc(var(--i)*51.43deg)) translateZ(88px)}.tab{padding:6px 10px}#piano{--w:48px}}
+@media (pointer:coarse){.btn,.chip,.tab,.mini{min-height:46px}}
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas><a class="skip" href="#main">تخطي إلى المحتوى</a><button class="tg" id="tg" aria-label="تبديل الوضع الليلي">🌓</button><header><h1>🎹 أكاديمية البيانو <small>· hussein piano</small></h1><p>تعلّم النظرية الموسيقية والعزف خطوة بخطوة</p><div class="hero" role="group" aria-label="اضغط على أي نوت للاستماع"><div class="ring" id="ring"></div></div></header>
+<nav class="tabs" id="tabs" role="tablist" aria-label="أقسام التطبيق"></nav>
+<main id="main" tabindex="-1"></main>
+<footer class="ft">صُنع بحب · hussein piano 🎹</footer>
+<div class="dock">
+<div class="dk"><span class="hd">العزف بالفأرة أو اللمس أو لوحة المفاتيح</span><span class="ctl"><button class="mini" id="sl" aria-label="أوكتاف أهدأ">◀</button><button class="mini" id="sr" aria-label="أوكتاف أحد">▶</button><button class="mini" id="zm" aria-label="تكبير البيانو">⛶</button></span><label><input type="checkbox" id="lbl" checked> أسماء النوت</label></div>
+<div class="sc" id="sc"><div id="piano"></div></div>
+</div>
+<script>
+const $=id=>document.getElementById(id);
+const ARN=['دو','دو♯','ري','ري♯','مي','فا','فا♯','صول','صول♯','لا','لا♯','سي'];
+const AR=['دو','ري','مي','فا','صول','لا','سي'];
+const LI=[0,0,1,1,2,3,3,4,4,5,5,6];
+const isB=m=>[1,3,6,8,10].includes(m%12);
+const nm=s=>{const x=/^([A-G])([#b]?)(\d)$/.exec(s);return 12*(+x[3]+1)+{C:0,D:2,E:4,F:5,G:7,A:9,B:11}[x[1]]+(x[2]=='#'?1:x[2]=='b'?-1:0)};
+const S=s=>s.split(' ').map(t=>{const[x,d]=t.split(':');return[x=='R'?null:x.includes('+')?x.split('+').map(nm):nm(x),d?+d:1]});
+/* ---------- audio ---------- */
+let C;const ac=()=>{C=C||new(window.AudioContext||window.webkitAudioContext)();if(C.state=='suspended')C.resume();return C};
+let W;
+function start(m){const c=ac();W=W||c.createPeriodicWave(new Float32Array([0,1,.5,.25,.12,.06]),new Float32Array(6));
+const o=c.createOscillator(),g=c.createGain(),f=c.createBiquadFilter(),t=c.currentTime;
+o.setPeriodicWave(W);o.frequency.value=440*2**((m-69)/12);f.type='lowpass';f.frequency.value=3200;
+g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.35,t+.01);g.gain.exponentialRampToValueAtTime(.12,t+.5);
+o.connect(f);f.connect(g);g.connect(c.destination);o.start();
+return()=>{const n=c.currentTime;g.gain.cancelScheduledValues(n);g.gain.setTargetAtTime(0,n,.1);o.stop(n+.7)}}
+/* ---------- piano ---------- */
+const KB={},held={};let hook=null;
+const c1=['KeyZ','KeyS','KeyX','KeyD','KeyC','KeyV','KeyG','KeyB','KeyH','KeyN','KeyJ','KeyM'];
+const c2=['KeyQ','Digit2','KeyW','Digit3','KeyE','KeyR','Digit5','KeyT','Digit6','KeyY','Digit7','KeyU'];
+const keyOf={},lab={};c1.forEach((c,i)=>keyOf[c]=60+i);c2.forEach((c,i)=>keyOf[c]=72+i);
+for(const c in keyOf)lab[keyOf[c]]=c.replace(/Key|Digit/,'');
+(function(){const p=$('piano');let wi=0;
+for(let m=48;m<=83;m++){const k=document.createElement('div');k.dataset.m=m;
+if(isB(m)){k.className='k b';k.style.left=`calc(${wi}*var(--w) - var(--bw)/2)`}else{k.className='k w';wi++}
+k.innerHTML=`<span class="t">${lab[m]||''}</span><span class="n">${isB(m)?'':ARN[m%12]}</span>`;
+
+
+p.appendChild(k);KB[m]=k}
+$('sc').scrollLeft=7*46-20})();
+$('lbl').onchange=e=>$('piano').classList.toggle('nl',!e.target.checked);
+function press(m,g){if(held[m])return;held[m]=start(m);KB[m].classList.add('on');if(navigator.vibrate&&!g)try{navigator.vibrate(6)}catch(e){}hook&&!g&&hook(m)}
+function release(m){if(held[m]){held[m]();delete held[m];KB[m].classList.remove('on')}}
+addEventListener('keydown',e=>{const m=keyOf[e.code];if(m&&!e.repeat&&!e.ctrlKey&&!e.metaKey&&!/INPUT/.test(e.target.tagName)){press(m)}});
+addEventListener('keyup',e=>{const m=keyOf[e.code];if(m)release(m)});
+/* ---------- sequences ---------- */
+let timers=[];
+function stopSeq(){timers.forEach(clearTimeout);timers=[];for(const m in KB)if(!held[m])KB[m].classList.remove('on')}
+function playSeq(seq,bpm=90){stopSeq();const u=60000/bpm;let t=0;
+seq.forEach(([n,b])=>{if(n!==null){const a=[].concat(n),st=[];
+timers.push(setTimeout(()=>a.forEach(m=>{st.push(start(m));KB[m].classList.add('on')}),t));
+timers.push(setTimeout(()=>{st.forEach(f=>f());a.forEach(m=>KB[m].classList.remove('on'))},t+b*u*.92))}t+=b*u})}
+/* ---------- staff ---------- */
+const dpos=m=>(Math.floor(m/12)-1)*7+LI[m%12];
+function staff(ms){const w=70+ms.length*34,y=d=>75-(d-30)*5;
+let s=`<svg class="staff" viewBox="0 0 ${w} 110" role="img" aria-label="مدرج موسيقي">`;
+for(let i=0;i<5;i++)s+=`<line x1="4" x2="${w-4}" y1="${35+i*10}" y2="${35+i*10}"/>`;
+s+=`<text class="clef" x="8" y="84" font-size="64">𝄞</text>`;
+ms.forEach((m,i)=>{const d=dpos(m),cx=62+i*34,cy=y(d);
+for(let l=28;l>=d;l-=2)s+=`<line x1="${cx-11}" x2="${cx+11}" y1="${y(l)}" y2="${y(l)}"/>`;
+for(let l=40;l<=d;l+=2)s+=`<line x1="${cx-11}" x2="${cx+11}" y1="${y(l)}" y2="${y(l)}"/>`;
+s+=`<ellipse cx="${cx}" cy="${cy}" rx="7" ry="5"/>`;
+s+=d<34?`<line x1="${cx+6.5}" x2="${cx+6.5}" y1="${cy}" y2="${cy-30}"/>`:`<line x1="${cx-6.5}" x2="${cx-6.5}" y1="${cy}" y2="${cy+30}"/>`;
+if(isB(m))s+=`<text x="${cx-21}" y="${cy+5}" font-size="14">♯</text>`});
+return s+'</svg>'}
+/* ---------- content ---------- */
+const LESSONS=[
+{t:'النوت الموسيقية السبع',h:`<p>تقوم الموسيقى على سبع نوت تتكرر في طبقات صوتية تسمى <b>أوكتافات</b>: دو (C) ري (D) مي (E) فا (F) صول (G) لا (A) سي (B).</p><p>على البيانو تتكرر مجموعة من مفتاحين أسودين ثم ثلاثة. نوت <b>دو</b> تقع دائماً قبل المفتاحين الأسودين مباشرة، فهي نقطة الانطلاق لحفظ لوحة المفاتيح.</p><p>المفتاح الأسود يعطي نوت بالتحويل: <b>الدييز ♯</b> يرفع النوت نصف درجة، و<b>البيمول ♭</b> يخفضها نصف درجة.</p><div class="note">جرّب: اضغط على أي مفتاح أبيض واقرأ اسمه المكتوب عليه.</div>`,st:'C4 D4 E4 F4 G4 A4 B4 C5',d:[['النوت السبع صعوداً','C4 D4 E4 F4 G4 A4 B4 C5'],['نزولاً','C5 B4 A4 G4 F4 E4 D4 C4']]},
+{t:'المدرج الموسيقي ومفتاح صول',h:`<p>تُكتب النوت على <b>خمسة خطوط وأربع مسافات</b> تُعد من الأسفل إلى الأعلى. <b>مفتاح صول</b> يلتف حول الخط الثاني ويحدد مكان نوت صول.</p><p>الخطوط من الأسفل: <b>مي – صول – سي – ري – فا</b>. المسافات: <b>فا – لا – دو – مي</b>.</p><p>نوت دو الوسطى (C4) تُكتب على خط إضافي صغير تحت المدرج، وهي النوت الموجودة وسط البيانو تقريباً.</p>`,st:'C4 D4 E4 F4 G4 A4 B4 C5 D5',d:[['نوت الخطوط','E4 G4 B4 D5 F5'],['نوت المسافات','F4 A4 C5 E5']]},
+{t:'القيم الزمنية والميزان',h:`<p>مدة النوت تُقاس بالضربات: <b>المستديرة</b> 4 ضربات، <b>البيضاء</b> ضربتان، <b>السوداء</b> ضربة، <b>الكروش (الثمن)</b> نصف ضربة.</p><p>الميزان <b>4/4</b> يعني أربع ضربات في كل مازورة، والضربة الأولى هي الأقوى. الميزان <b>3/4</b> يعطي إحساس الفالس.</p><div class="note">استخدم تبويب الإيقاع لتتدرب على العد مع المترونوم.</div>`,d:[['مستديرة، بيضاء، سوداء، ثمن','C4:4 R:1 C4:2 R:1 C4:1 C4:1 R:1 C4:.5 C4:.5 C4:.5 C4:.5']]},
+{t:'السلم الكبير',h:`<p>السلم الكبير له صيغة ثابتة من الأبعاد: <b>طون – طون – نصف – طون – طون – طون – نصف</b>. (الطون = مفتاحان، نصف الطون = مفتاح واحد متجاور).</p><p>سلم دو الكبير لا يحتوي على مفاتيح سوداء. وإذا بدأت من صول وطبّقت الصيغة نفسها تحتاج إلى فا♯.</p>`,st:'C4 D4 E4 F4 G4 A4 B4 C5',d:[['سلم دو الكبير','C4 D4 E4 F4 G4 A4 B4 C5'],['سلم صول الكبير','G4 A4 B4 C5 D5 E5 F#5 G5']]},
+{t:'السلم الصغير الطبيعي',h:`<p>صيغته: <b>طون – نصف – طون – طون – نصف – طون – طون</b>. طابعه حزين مقارنة بالكبير.</p><p>سلم لا الصغير هو «قريب» دو الكبير لأنهما يشتركان في النوت نفسها، لكن نقطة الارتكاز تختلف.</p>`,st:'A3 B3 C4 D4 E4 F4 G4 A4',d:[['سلم لا الصغير','A3 B3 C4 D4 E4 F4 G4 A4'],['سلم دو الصغير','C4 D4 Eb4 F4 G4 Ab4 Bb4 C5']]},
+{t:'الفواصل (المسافات بين النوت)',h:`<p>الفاصلة هي المسافة بين نوتين وتُقاس بأنصاف الأطوان: ثانية كبيرة (2)، ثالثة كبيرة (4)، ثالثة صغيرة (3)، رابعة (5)، خامسة (7)، أوكتاف (12).</p><p>الثالثة الكبيرة تبدو <b>مشرقة</b> والثالثة الصغيرة تبدو <b>حزينة</b>، وهذا أساس التمييز بين الكبير والصغير.</p>`,d:[['ثالثة كبيرة','C4 E4 C4+E4:2'],['ثالثة صغيرة','C4 Eb4 C4+Eb4:2'],['خامسة','C4 G4 C4+G4:2'],['أوكتاف','C4 C5 C4+C5:2']]},
+{t:'الأكوردات',h:`<p>الأكورد ثلاث نوت أو أكثر تُعزف معاً. أبسط شكل هو الثلاثي المبني على ثالثتين متتاليتين:</p><p>• <b>كبير</b>: ثالثة كبيرة ثم صغيرة (دو – مي – صول)<br>• <b>صغير</b>: ثالثة صغيرة ثم كبيرة (دو – مي♭ – صول)<br>• <b>متناقص</b>: ثالثتان صغيرتان، وصوته متوتر.</p>`,d:[['دو كبير','C4+E4+G4:3'],['دو صغير','C4+Eb4+G4:3'],['متناقص','C4+Eb4+Gb4:3'],['أربيج دو','C4 E4 G4 C5 G4 E4 C4+E4+G4:2']]},
+{t:'التتابع الهارموني',h:`<p>أشهر التتابعات هو <b>I – IV – V – I</b>: ننتقل من أكورد الدرجة الأولى إلى الرابعة ثم الخامسة ونعود للأولى فنشعر بالاستقرار. في دو: دو – فا – صول – دو.</p><p>تتابع <b>I – V – vi – IV</b> تقوم عليه آلاف الأغاني الحديثة.</p>`,d:[['I – IV – V – I','C4+E4+G4:2 C4+F4+A4:2 B3+D4+G4:2 C4+E4+G4:4'],['I – V – vi – IV','C4+E4+G4:2 B3+D4+G4:2 C4+E4+A4:2 C4+F4+A4:2']]},
+{t:'مدخل إلى المقامات العربية',h:`<p>المقامات العربية تعتمد سلالم مختلفة. مقام <b>الحجاز على الرِّي</b> يمكن عزفه على البيانو: ري – مي♭ – فا♯ – صول – لا – سي♭ – دو – ري، وفيه فاصلة «زائدة ثانية» بين مي♭ وفا♯.</p><div class="note">ملاحظة: مقامات مثل الراست والبياتي تحتوي على ربع تون (نصف بيمول) لا يمكن عزفه بدقة على البيانو العادي، لذلك يُستخدم تقريب فقط.</div>`,d:[['حجاز على الري','D4 Eb4 F#4 G4 A4 Bb4 C5 D5'],['نزولاً','D5 C5 Bb4 A4 G4 F#4 Eb4 D4']]},
+{t:'الجلسة والأصابع',h:`<p>اجلس باستقامة، المرفقان بمستوى المفاتيح، والأصابع منحنية كأنك تمسك كرة صغيرة. الأصابع تُرقَّم من 1 (الإبهام) إلى 5 (الخنصر).</p><p>سلم دو الكبير باليد اليمنى: <b>1-2-3-1-2-3-4-5</b>، ويمرّ الإبهام تحت الإصبع الثالث بعد مي. ابدأ ببطء ثم زِد السرعة تدريجياً.</p>`,d:[['استمع للسلم بسرعة بطيئة','C4 D4 E4 F4 G4 A4 B4 C5',60]]},
+{t:'دائرة الخامسات والتأشيرات',lv:'متوسط',h:`<p>التأشيرة هي الدييزات أو البيمولات المكتوبة بجانب المفتاح لتحديد السلم. في <b>دائرة الخامسات</b> كل صعود بمقدار خامسة (دو، صول، ري، لا، مي، سي، فا♯) يضيف دييزاً جديداً.</p><p>ترتيب الدييزات: <b>فا دو صول ري لا مي سي</b>، وترتيب البيمولات عكسه: <b>سي مي لا ري صول دو فا</b>. للتعرف السريع على سلم له دييزات: التونيك يكون أعلى آخر دييز بنصف طون.</p>`,d:[['ري كبير (دييزان)','D4 E4 F#4 G4 A4 B4 C#5 D5'],['فا كبير (بيمول واحد)','F4 G4 A4 Bb4 C5 D5 E5 F5'],['لا كبير (3 دييزات)','A3 B3 C#4 D4 E4 F#4 G#4 A4']]},
+{t:'السلالم الصغيرة الثلاثة',lv:'متوسط',h:`<p>للسلم الصغير ثلاثة أشكال: <b>الطبيعي</b>، و<b>الهارموني</b> (الدرجة السابعة مرفوعة نصف طون لتصنع حساسة تقود إلى التونيك)، و<b>الميلودي</b> (السادسة والسابعة مرفوعتان صعوداً وتعودان طبيعيتين نزولاً).</p><p>في الهارموني فاصلة زائدة بين الدرجتين 6 و7 تعطيه نكهة شرقية قريبة من الحجاز.</p>`,st:'A3 B3 C4 D4 E4 F4 G#4 A4',d:[['لا هارموني','A3 B3 C4 D4 E4 F4 G#4 A4'],['لا ميلودي صعوداً ونزولاً','A3 B3 C4 D4 E4 F#4 G#4 A4 G4 F4 E4 D4 C4 B3 A3']]},
+{t:'الأكوردات السباعية',lv:'متوسط',h:`<p>نضيف ثالثة فوق الثلاثي فنحصل على أكورد سباعي: <b>Cmaj7</b> ناعم وحالم، <b>C7</b> (دومينانت) متوتر يطلب الحل، <b>Cm7</b> دافئ، و<b>Cm7♭5</b> نصف متناقص يُستخدم كثيراً في الجاز.</p>`,d:[['Cmaj7','C4+E4+G4+B4:3'],['C7','C4+E4+G4+Bb4:3'],['Cm7','C4+Eb4+G4+Bb4:3'],['Cm7♭5','C4+Eb4+Gb4+Bb4:3']]},
+{t:'قلب الأكورد والانتقال السلس',lv:'متوسط',h:`<p>للأكورد ثلاثة أوضاع: <b>أساسي</b> (الجذر في الأسفل)، <b>قلب أول</b> (الثالثة في الأسفل)، <b>قلب ثانٍ</b> (الخامسة في الأسفل).</p><p>نستخدم القلب لتقليل حركة اليد بين الأكوردات (Voice Leading): احتفظ بالنوت المشتركة وحرّك الباقي بأقل مسافة.</p>`,d:[['الأوضاع الثلاثة','C4+E4+G4:2 E4+G4+C5:2 G4+C5+E5:2'],['انتقال بقفزة','C4+E4+G4:2 G4+B4+D5:2 C4+E4+G4:3'],['انتقال سلس بالقلب','C4+E4+G4:2 B3+D4+G4:2 C4+E4+G4:3']]},
+{t:'أكوردات السلم والدرجات',lv:'متوسط',h:`<p>كل درجة في السلم تبني أكورداً. في دو الكبير: <b>I دو (كبير)، ii ري (صغير)، iii مي (صغير)، IV فا (كبير)، V صول (كبير)، vi لا (صغير)، vii° سي (متناقص)</b>.</p><p>الأرقام الرومانية تسمح لك بنقل أي تتابع إلى أي سلم بسهولة.</p>`,d:[['أكوردات سلم دو','C4+E4+G4:1.5 D4+F4+A4:1.5 E4+G4+B4:1.5 F4+A4+C5:1.5 G4+B4+D5:1.5 A4+C5+E5:1.5 B4+D5+F5:1.5 C5+E5+G5:3']]},
+{t:'مرافقة اليد اليسرى',lv:'متوسط',h:`<p>اليد اليسرى تحمل الأساس الهارموني والنبض بينما تغني اليمنى اللحن. أشهر الأنماط: <b>الأربيج الصاعد</b>، <b>باص ألبرتي</b> (أسفل – أعلى – وسط – أعلى)، و<b>الأوكتاف المكسور</b>.</p><p>تدرّب على اليسرى وحدها حتى تصبح آلية قبل ضم اليمنى.</p>`,d:[['باص ألبرتي على I–IV–V–I','C3 G3 E3 G3 C3 G3 E3 G3 F3 C4 A3 C4 F3 C4 A3 C4 G3 D4 B3 D4 G3 D4 B3 D4 C3+C4:4',170]]},
+{t:'الإيقاعات المنقّطة والمتزامنة والثلاثيات',lv:'متوسط',h:`<p>النقطة بعد النوت تضيف نصف قيمتها: السوداء المنقطة = 1.5 ضربة. <b>الثلاثية</b> تقسم الضربة إلى ثلاثة أجزاء متساوية. <b>التزامن (Syncopation)</b> يضع التشديد بين الضربات أو على الضعيفة منها فيعطي حيوية.</p><div class="note">عُدّ بصوت مرتفع مع المترونوم: 1 و 2 و 3 و 4 و.</div>`,d:[['منقطة','C4:1.5 D4:.5 E4:1.5 F4:.5 G4:3'],['ثلاثيات','C4:.33 D4:.33 E4:.34 F4:.33 G4:.33 A4:.34 G4:2'],['تزامن','C4:.5 E4:1 G4:1 E4:.5 C4:1 G3:.5 C4:2']]},
+{t:'القفلات (Cadences)',lv:'متوسط',h:`<p>القفلة هي نهاية العبارة الموسيقية: <b>الكاملة</b> V–I (إحساس بالنهاية)، <b>البلاغالية</b> IV–I (كلمة آمين)، <b>المعلّقة</b> تنتهي على V (كأنها سؤال)، <b>المخادعة</b> V–vi (مفاجأة).</p>`,d:[['كاملة V–I','B3+D4+G4:2 C4+E4+G4:3'],['بلاغالية IV–I','C4+F4+A4:2 C4+E4+G4:3'],['معلّقة','C4+E4+G4:2 B3+D4+G4:3'],['مخادعة V–vi','B3+D4+G4:2 C4+E4+A4:3']]},
+{t:'التعبير الموسيقي والديناميكيات',lv:'متوسط',h:`<p>الديناميكيات: <b>pp</b> هادئ جداً، <b>p</b> هادئ، <b>mf</b> متوسط، <b>f</b> قوي، <b>ff</b> قوي جداً، و<b>cresc.</b> تصاعد تدريجي. أما الأداء فيتنوع بين <b>staccato</b> (قصير منقطع) و<b>legato</b> (متصل) و<b>accent</b> (تشديد).</p><p>دواسة السستين تطيل الرنين: ارفعها وأعد ضغطها عند كل تغيير أكورد حتى لا تختلط الأصوات.</p>`,d:[['Staccato','C4:.3 R:.7 D4:.3 R:.7 E4:.3 R:.7 F4:.3 R:.7 G4:.3'],['Legato','C4 D4 E4 F4 G4:2']]},
+{t:'الأنماط الكنسية (Modes)',lv:'احترافي',h:`<p>الأنماط تنشأ من البدء بكل درجة من السلم الكبير: <b>أيوني</b> (الكبير)، <b>دورياني</b> (صغير بسادسة كبيرة، أجواء الجاز)، <b>فريجي</b> (طابع إسباني)، <b>ليدي</b> (حالم)، <b>ميكسوليدي</b> (بلوز وروك)، <b>إيوليان</b> (الصغير الطبيعي)، <b>لوكري</b>.</p><p>على المفاتيح البيضاء فقط ابدأ من الري للدورياني، ومن المي للفريجي، ومن الفا لليدي، ومن الصول للميكسوليدي.</p>`,d:[['دورياني على ري','D4 E4 F4 G4 A4 B4 C5 D5'],['فريجي على مي','E4 F4 G4 A4 B4 C5 D5 E5'],['ليدي على فا','F4 G4 A4 B4 C5 D5 E5 F5'],['ميكسوليدي على صول','G4 A4 B4 C5 D5 E5 F5 G5']]},
+{t:'السلالم الخماسية والبلوز',lv:'احترافي',h:`<p>السلم <b>الخماسي</b> خمس نوت بلا أنصاف أطوان، لذا لا يعطي أي نغمة نشاز. <b>الخماسي الصغير</b> أساس الروك والبلوز، وإذا أضفت له الدرجة ♭5 (النوتة الزرقاء) حصلت على <b>سلم البلوز</b>.</p>`,d:[['خماسي دو الكبير','C4 D4 E4 G4 A4 C5'],['خماسي لا الصغير','A3 C4 D4 E4 G4 A4'],['سلم البلوز على لا','A3 C4 D4 Eb4 E4 G4 A4']]},
+{t:'السلم الكامل والمتناقص',lv:'احترافي',h:`<p><b>السلم الكامل</b> كله أطوان (ست نوت)، صوته حالم غامض ويستخدمه ديبوسي. <b>السلم المتناقص</b> يتناوب طون ونصف، ويُستخدم فوق الأكوردات المتناقصة وفي الجاز.</p>`,d:[['كامل','C4 D4 E4 F#4 G#4 A#4 C5'],['متناقص (طون-نصف)','C4 D4 Eb4 F4 Gb4 Ab4 A4 B4 C5']]},
+{t:'التحوّل بين السلالم (Modulation)',lv:'احترافي',h:`<p>التحول هو الانتقال من سلم إلى آخر داخل المقطوعة. أسهل طريقة: <b>الأكورد المحوري</b> المشترك بين السلمين. مثلاً Am هو vi في دو وهو ii في صول؛ ثم نضيف D7 (V7 صول) لنستقر على صول.</p>`,d:[['من دو إلى صول','C4+E4+G4:2 C4+E4+A4:2 D4+F#4+A4+C5:2 B3+D4+G4:2 G4+B4+D5:4']]},
+{t:'أكوردات متقدمة: التسعات والمعلّقة',lv:'احترافي',h:`<p>الأكوردات الموسّعة تضيف ألواناً: <b>maj9</b> و<b>9</b> (نضيف التاسعة)، <b>add9</b>، <b>sus4/sus2</b> (نستبدل الثالثة فتصبح معلّقة تطلب الحل)، و<b>7♯9</b> (أكورد جيمي هندريكس).</p>`,d:[['Cmaj9','C4+E4+G4+B4+D5:3'],['C9','C4+E4+G4+Bb4+D5:3'],['Csus4 ثم C','C4+F4+G4:2 C4+E4+G4:3'],['Cadd9','C4+E4+G4+D5:3'],['C7♯9','C4+E4+G4+Bb4+D#5:3']]},
+{t:'هارموني الجاز: ii–V–I والبلوز',lv:'احترافي',h:`<p>العمود الفقري للجاز هو <b>ii–V–I</b>: Dm7 ← G7 ← Cmaj7. ركّز على حركة الأصوات: السابعة في Dm7 (دو) تنزل إلى الثالثة في G7 (سي) ثم تستقر.</p><p><b>بلوز 12 مازورة</b>: 4 مازورات I7، 2 IV7، 2 I7، ثم V7 وIV7 وI7 وV7 للعودة.</p>`,d:[['ii–V–I في دو','D4+F4+A4+C5:2 B3+F4+G4+D5:2 C4+E4+G4+B4:4'],['بلوز مختصر','C4+E4+G4+Bb4:4 F4+A4+C5+Eb5:2 C4+E4+G4+Bb4:2 G3+B3+D4+F4:2 F4+A4+C5+Eb5:2 C4+E4+G4+Bb4:4',100]]},
+{t:'التقنية الاحترافية',lv:'احترافي',h:`<p>قواعد الاحتراف: تدرّب <b>ببطء شديد</b> أولاً، يد واحدة ثم اليدان، قسّم المقطوعة إلى مقاطع قصيرة، واستخدم سلم المترونوم: ارفع السرعة 4 ضربات فقط كل مرة بعد نجاح ثلاث مرات متتالية بلا خطأ.</p><p>حافظ على المعصم مرتخياً والإبهام يمرّ بسلاسة، وسجّل نفسك واستمع لتكتشف أخطاءك. تمارين أوكتافين وأربيجات واسعة تبني الاستقلالية والسرعة.</p>`,d:[['سلم دو بأوكتافين','C4 D4 E4 F4 G4 A4 B4 C5 D5 E5 F5 G5 A5 B5',160],['أربيج واسع','C4 E4 G4 C5 E5 G5 C5 G4 E4 C4',140]]},
+{t:'خطة التدريب اليومية',lv:'احترافي',h:`<p>جلسة مثالية مدتها 60 دقيقة:</p><p>• <b>5 د</b> إحماء وتمدد خفيف<br>• <b>10 د</b> سلالم وأربيجات<br>• <b>25 د</b> المقطوعة الحالية بمقاطع قصيرة<br>• <b>10 د</b> قراءة نوت من الورقة (Sight-reading)<br>• <b>5 د</b> تدريب الأذن<br>• <b>5 د</b> عزف حر وتأليف</p><p>الانتظام أهم من الطول: 30 دقيقة يومياً أفضل من ساعتين مرة بالأسبوع. خذ راحة 5 دقائق كل 25 دقيقة.</p>`,d:[]},
+{t:'تدريب الأذن (Ear Training)',lv:'احترافي',h:`<p>تعلّم تمييز الفواصل بالسماع، واربط كل فاصلة بأغنية تعرفها: الخامسة تبدأ بها «لمعي لمعي يا نجمة»، والأوكتاف يبدأ بها «Somewhere Over the Rainbow».</p><p>اسمع الفاصلة ثم غنِّها قبل أن تعزفها، ثم اختبر نفسك: أغمض عينيك واطلب من صديق أن يعزف لك فاصلة عشوائية.</p>`,d:[['ثانية صغيرة','C4 Db4 C4+Db4:2'],['ثانية كبيرة','C4 D4 C4+D4:2'],['رابعة','C4 F4 C4+F4:2'],['تريتون','C4 F#4 C4+F#4:2'],['خامسة','C4 G4 C4+G4:2'],['سادسة كبيرة','C4 A4 C4+A4:2'],['سابعة كبيرة','C4 B4 C4+B4:2']]},
+{t:'التأليف وبناء المقطوعة',lv:'احترافي',h:`<p>ابدأ بـ<b>موتيف</b> (نواة لحنية من 3 إلى 5 نوت) ثم طوّره بالتكرار والمتتالية (نقله لدرجة أخرى) والعكس. اجعل العبارة <b>سؤالاً وجواباً</b>: الأولى تنتهي معلّقة والثانية تقفل.</p><p>أشكال شائعة: <b>AABA</b> (الأغنية الكلاسيكية)، و<b>مقطع–كورس</b> (Verse–Chorus). هيكل أكوردات آمن: I – vi – IV – V.</p><div class="note">اكتب ألحانك بصيغة النوت واحفظها في مكتبة hussein piano ضمن تبويب التدريب.</div>`,d:[['سؤال وجواب','C4 E4 G4 E4 C4 E4 G4:2 D4 F4 A4 F4 D4 G4 C4:3']]},
+{t:'طريق الاحتراف: برنامج المقطوعات',lv:'احترافي',h:`<p>تدرّج مقترح لبناء مستوى احترافي:</p><p>• <b>مبتدئ</b>: مينيت صول (باخ/بتزولد)، نشيد الفرح، Für Elise (المقدمة)<br>• <b>متوسط</b>: بريليود مي صغير Op.28 رقم 4 (شوبان)، أغاني بسيطة بمرافقة ألبرتي<br>• <b>متقدم</b>: سوناتا ضوء القمر (الحركة الأولى)، تأملات من ديبوسي، إنفنشنز لباخ<br>• <b>احترافي</b>: بالادات شوبان، سوناتات بيتهوفن الكاملة</p><p>وبالتوازي: تمارين هانون وتشيرني للسرعة، وتعلّم قراءة النوت من الورقة، ودروس مع معلم عند الإمكان لتصحيح وضعية اليدين، فالمعلم لا يعوّضه أي تطبيق.</p>`,d:[]}
+];
+const SONGS=[
+{n:'نشيد الفرح',s:'E4 E4 F4 G4 G4 F4 E4 D4 C4 C4 D4 E4 E4:1.5 D4:.5 D4:2'},
+{n:'لمعي لمعي يا نجمة',s:'C4 C4 G4 G4 A4 A4 G4:2 F4 F4 E4 E4 D4 D4 C4:2'},
+{n:'Hot Cross Buns',s:'E4 D4 C4:2 E4 D4 C4:2 C4:.5 C4:.5 C4:.5 C4:.5 D4:.5 D4:.5 D4:.5 D4:.5 E4 D4 C4:2'},
+{n:'Happy Birthday',s:'G4:.75 G4:.25 A4 G4 C5 B4:2 G4:.75 G4:.25 A4 G4 D5 C5:2 G4:.75 G4:.25 G5 E5 C5 B4 A4:2 F5:.75 F5:.25 E5 C5 D5 C5:3'},
+{n:'Jingle Bells',s:'E4 E4 E4:2 E4 E4 E4:2 E4 G4 C4:1.5 D4:.5 E4:4 F4 F4 F4:1.5 F4:.5 F4 E4 E4 E4:.5 E4:.5 E4 D4 D4 E4 D4:2 G4:2'},
+{n:'Mary Had a Little Lamb',s:'E4 D4 C4 D4 E4 E4 E4:2 D4 D4 D4:2 E4 G4 G4:2 E4 D4 C4 D4 E4 E4 E4 E4 D4 D4 E4 D4 C4:4'},
+{n:'Amazing Grace',s:'D4 G4:2 B4:.5 G4:.5 B4:2 A4 G4:2 E4 D4:2 D4 G4:2 B4:.5 G4:.5 B4:2 A4 D5:3'},
+{n:'Für Elise (مقدمة)',s:'E5:.5 D#5:.5 E5:.5 D#5:.5 E5:.5 B4:.5 D5:.5 C5:.5 A4:1.5 C4:.5 E4:.5 A4:.5 B4:1.5 E4:.5 G#4:.5 B4:.5 C5:2'}
+];
+/* ---------- state ---------- */
+let tab='lessons',cur=0,done={};
+try{done=JSON.parse(localStorage.getItem('pa_done')||'{}')}catch(e){}
+let CUS=[];try{CUS=JSON.parse(localStorage.getItem('hp_songs')||'[]')}catch(e){}
+const ALL=()=>SONGS.concat(CUS),tg=i=>[].concat(P.seq[i][0])[0];
+let P={song:0,i:-1,ok:0,bad:0,seq:[]},Q={m:64,s:0,t:0,k:0,fb:''},M={on:0,bpm:80,bt:4,i:0,id:null};
+const TABS=[['lessons','📚 الدروس'],['practice','🎶 التدريب'],['quiz','🧠 قراءة النوت'],['rhythm','⏱ الإيقاع'],['tests','📝 اختبارات'],['plan','📅 خطة 30 يوماً']];
+function drawTabs(){$('tabs').innerHTML=TABS.map(([k,v])=>`<button role="tab" aria-selected="${k==tab}" class="tab ${k==tab?'a':''}" data-act="tab" data-t="${k}">${v}</button>`).join('')}
+function hint(){for(const m in KB)KB[m].classList.remove('hint');
+if(P.i>=0&&P.i<P.seq.length){const t=tg(P.i);for(const m in KB)if(m%12==t%12)KB[m].classList.add('hint');const km=KB[60+t%12];km&&innerWidth<900&&km.scrollIntoView({inline:'center',block:'nearest',behavior:'smooth'})}}
+function qNew(){const w=[];for(let m=60;m<=81;m++)if(!isB(m))w.push(m);Q.m=w[Math.floor(Math.random()*w.length)];Q.fb=''}
+function view(){
+if(tab=='tests')return testView();if(tab=='plan')return planView();
+if(tab=='lessons'){const L=LESSONS[cur];
+return `<div class="chips">${LESSONS.map((l,i)=>`<button class="chip ${i==cur?'a':''} ${done[i]?'d':''}" data-act="ls" data-i="${i}">${i+1}</button>`).join('')}</div>
+<div class="card"><h2>${cur+1}. ${L.t}</h2><p class="note">المستوى: ${L.lv||'مبتدئ'}</p>${L.h}${L.st?staff(L.st.split(' ').map(nm)):''}
+<div class="demos">${L.d.map((d,i)=>`<button class="btn p" data-act="demo" data-i="${i}">▶ ${d[0]}</button>`).join('')}</div>
+<div class="nav"><button class="btn" data-act="ls" data-i="${Math.max(0,cur-1)}">→ السابق</button>
+<button class="btn" data-act="done">${done[cur]?'✓ تم الإنجاز':'تحديد كمنجَز'}</button>
+<button class="btn" data-act="ls" data-i="${Math.min(LESSONS.length-1,cur+1)}">التالي ←</button></div></div>
+<p class="note">تقدمك: ${Object.values(done).filter(Boolean).length} من ${LESSONS.length} دروس</p>`}
+if(tab=='practice'){return `<div class="chips">${ALL().map((s,i)=>`<button class="chip ${i==P.song?'a':''}" data-act="song" data-i="${i}">${i>=SONGS.length?'★ ':''}${s.n}</button>`).join('')}</div>
+<div class="card"><h2>${ALL()[P.song].n}</h2><p>استمع أولاً، ثم اضغط «ابدأ التدريب»: ستضيء المفاتيح المطلوبة، وعليك الضغط على النوت الصحيحة بالترتيب.</p>
+<div class="demos"><button class="btn" data-act="plisten">▶ استمع</button><button class="btn p" data-act="pstart">ابدأ التدريب</button></div>
+<div class="st" id="pst" aria-live="polite">${pStat()}</div>${P.song>=SONGS.length?'<button class="btn" data-act="hdel">🗑 حذف هذه المقطوعة</button>':''}</div>${lib()}`}
+if(tab=='quiz'){return `<div class="card"><h2>ما اسم هذه النوت؟</h2>${staff([Q.m])}
+<div class="demos" style="justify-content:center">${AR.map((n,i)=>`<button class="btn" data-act="qans" data-i="${i}">${n}</button>`).join('')}</div>
+<div class="st" style="text-align:center" aria-live="polite">${Q.fb}</div>
+<div class="demos" style="justify-content:center"><button class="btn" data-act="qlisten">🔊 اسمع النوت</button><button class="btn" data-act="qnew">نوت جديدة</button></div>
+<p class="note">يمكنك الإجابة بالأزرار أو بالضغط على المفتاح الصحيح في البيانو. الصحيح: ${Q.s} من ${Q.t} | أطول سلسلة: ${Q.k}</p></div>`}
+return `<div class="card"><h2>المترونوم</h2><p>تدرّب على العزف مع نبض ثابت. ابدأ ببطء ثم زد السرعة.</p>
+<div class="dots" id="dots">${Array.from({length:M.bt},(_,i)=>`<span class="dot"></span>`).join('')}</div>
+<p style="text-align:center;font-size:1.4rem;margin:0"><b id="bv">${M.bpm}</b> ضربة/دقيقة</p>
+<input type="range" id="mb" min="40" max="200" value="${M.bpm}" aria-label="السرعة">
+<div class="demos" style="justify-content:center">${[2,3,4,6].map(b=>`<button class="chip ${M.bt==b?'a':''}" data-act="mbt" data-i="${b}">${b}/4</button>`).join('')}
+<button class="btn p" data-act="mtog">${M.on?'⏹ إيقاف':'▶ تشغيل'}</button></div></div>`}
+function pStat(){if(P.i<0)return '';if(P.i>=P.seq.length){const a=Math.round(100*P.ok/(P.ok+P.bad));return `<span class="ok">أحسنت! أنهيت المقطوعة بدقة ${a}%</span>`}
+const t=tg(P.i);return `النوت التالية: <b>${ARN[t%12]}</b> (${P.i+1}/${P.seq.length}) | صح: ${P.ok} خطأ: ${P.bad}`}
+function render(){drawTabs();$('main').innerHTML=view();hint()}
+function mTick(){const c=ac(),o=c.createOscillator(),g=c.createGain(),t=c.currentTime;o.frequency.value=M.i==0?1500:1000;
+g.gain.setValueAtTime(.3,t);g.gain.exponentialRampToValueAtTime(.001,t+.06);o.connect(g);g.connect(c.destination);o.start();o.stop(t+.08);
+document.querySelectorAll('.dot').forEach((d,i)=>d.classList.toggle('on',i==M.i));M.i=(M.i+1)%M.bt}
+function mRun(){clearInterval(M.id);if(M.on){M.i=0;mTick();M.id=setInterval(mTick,60000/M.bpm)}}
+function qAns(i){const c=LI[Q.m%12];Q.t++;
+if(i==c){Q.s++;Q.k=Math.max(Q.k,++Q.cur||(Q.cur=1));Q.fb='<span class="ok">✓ صحيح!</span>';render();setTimeout(()=>{if(tab=='quiz'){qNew();render()}},800)}
+else{Q.cur=0;Q.fb=`<span class="bad">✗ ليست ${AR[i]}. حاول مرة أخرى.</span>`;render()}}
+hook=m=>{
+if(tab=='practice'&&P.i>=0&&P.i<P.seq.length){if(m%12==tg(P.i)%12){P.ok++;P.i++;hint()}else P.bad++;$('pst').innerHTML=pStat()}
+else if(tab=='quiz'&&!isB(m))qAns(LI[m%12])};
+document.addEventListener('click',e=>{const t=e.target.closest('[data-act]');if(!t)return;const a=t.dataset.act,i=+t.dataset.i;
+if(a=='tab'){stopSeq();tab=t.dataset.t;P.i=-1;if(tab=='quiz'&&!Q.t)qNew();render()}
+else if(a=='ls'){stopSeq();cur=i;render();scrollTo({top:0,behavior:'smooth'})}
+else if(a=='demo'){const d=LESSONS[cur].d[i];playSeq(S(d[1]),d[2]||90)}
+else if(a=='done'){done[cur]=!done[cur];try{localStorage.setItem('pa_done',JSON.stringify(done))}catch(e){}render()}
+else if(a=='song'){stopSeq();P.song=i;P.i=-1;render()}
+else if(a=='plisten')playSeq(S(ALL()[P.song].s),ALL()[P.song].b||100);
+else if(a=='pstart'){stopSeq();P.seq=S(ALL()[P.song].s).filter(x=>x[0]!==null);P.i=0;P.ok=P.bad=0;hint();$('pst').innerHTML=pStat()}
+else if(a=='hsave'){const t=$('hn').value.trim();if(!t)hm('اكتب النوت أولاً','bad');else imp(t,$('hnm').value.trim())}
+else if(a=='hdel'){CUS.splice(P.song-SONGS.length,1);sv();P.song=0;P.i=-1;render()}
+else if(a=='hexp'){$('hn').value=JSON.stringify(CUS);hm(CUS.length?'انسخ النص أعلاه واحتفظ به، ثم الصقه لاحقاً لاستيراده':'لا توجد مقطوعات مخصصة بعد','ok')}
+else if(a=='tstart'){T={lv:t.dataset.l,i:0,s:0,sel:-1,o:shuf()};render()}
+else if(a=='tans'){if(T.sel>=0)return;T.sel=i;if(i==0)T.s++;render()}
+else if(a=='tnext'){T.i++;T.sel=-1;T.o=shuf();if(T.i>=TB[T.lv].length){best[T.lv]=Math.max(best[T.lv]||0,T.s);try{localStorage.setItem('hp_best',JSON.stringify(best))}catch(e){}}render()}
+else if(a=='tmenu'){T.lv=null;render()}
+else if(a=='pday'){pd[i]=!pd[i];try{localStorage.setItem('hp_plan',JSON.stringify(pd))}catch(e){}render()}
+else if(a=='preset'){pd={};try{localStorage.removeItem('hp_plan')}catch(e){}render()}
+else if(a=='qans')qAns(i);
+else if(a=='qlisten')playSeq([[Q.m,2]]);
+else if(a=='qnew'){qNew();render()}
+else if(a=='mbt'){M.bt=i;if(M.on)mRun();render()}
+else if(a=='mtog'){M.on=M.on?0:1;mRun();render()}});
+const TOK=/^(R|[A-G][#b]?\d(\+[A-G][#b]?\d)*)(:\d*\.?\d+)?$/;
+const okN=s=>{const t=(s||'').trim().split(/\s+/);return t[0]!==''&&t.every(x=>TOK.test(x))};
+const inR=s=>s.trim().split(/\s+/).every(x=>x.replace(/:.*/,'').split('+').every(y=>y=='R'||(m=>m>=48&&m<=83)(nm(y))));
+const sv=()=>{try{localStorage.setItem('hp_songs',JSON.stringify(CUS))}catch(e){}};
+const hm=(t,c)=>{const e=$('hmsg');if(e)e.innerHTML=`<span class="${c}">${t}</span>`};
+function imp(t,name,b){if(/^[\[{]/.test(t)){try{let c=0;[].concat(JSON.parse(t)).forEach(o=>{const s=o.s||o.notes;if(s&&okN(s)&&inR(s)){CUS.push({n:o.n||o.name||'مقطوعة',s:s,b:o.b});c++}});sv();render();hm(`تم استيراد ${c} مقطوعة`,c?'ok':'bad')}catch(e){hm('ملف JSON غير صالح','bad')}return}
+if(!okN(t))return hm('صيغة النوت غير صحيحة، راجع المثال أعلاه','bad');if(!inR(t))return hm('النوت خارج نطاق البيانو (من C3 إلى B5)','bad');
+CUS.push({n:name||'مقطوعة '+(CUS.length+1),s:t.replace(/\s+/g,' '),b:b});sv();P.song=SONGS.length+CUS.length-1;P.i=-1;render();hm('تمت إضافة المقطوعة ✓','ok')}
+function midi(buf){const d=new DataView(buf);let p=0;const u32=()=>(p+=4,d.getUint32(p-4)),u16=()=>(p+=2,d.getUint16(p-2)),vl=()=>{let v=0,b;do{b=d.getUint8(p++);v=v<<7|b&127}while(b&128);return v};
+if(u32()!=0x4d546864)throw 1;u32();u16();const nt=u16(),dv=u16();let best=[],us=500000,ts=0;
+for(let t=0;t<nt;t++){if(u32()!=0x4d54726b)break;const len=u32(),end=p+len;let tick=0,rs=0,ns=[];
+while(p<end){tick+=vl();let s=d.getUint8(p);if(s&128){p++;if(s<240)rs=s}else s=rs;
+if(s==255){const ty=d.getUint8(p++),l=vl();if(ty==81&&!ts){us=d.getUint8(p)<<16|d.getUint8(p+1)<<8|d.getUint8(p+2);ts=1}p+=l}
+else if(s==240||s==247)p+=vl();
+else{const h=s>>4;if(h==9&&(s&15)!=9&&d.getUint8(p+1)>0)ns.push([tick,d.getUint8(p)]);p+=(h==12||h==13)?1:2}}
+p=end;if(ns.length>best.length)best=ns}
+if(!best.length)throw 2;const g=[];best.forEach(([t,n])=>{const l=g[g.length-1];if(l&&l[0]==t)l[1]=Math.max(l[1],n);else g.push([t,n])});
+const NN=['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
+const out=g.slice(0,400).map(([t,n],i)=>{while(n<48)n+=12;while(n>83)n-=12;const nx=g[i+1]?g[i+1][0]:t+dv;return NN[n%12]+(Math.floor(n/12)-1)+':'+Math.min(4,Math.max(.25,Math.round((nx-t)/dv*4)/4))});
+return{s:out.join(' '),b:Math.round(Math.min(160,Math.max(50,60000000/us)))}}
+const lib=()=>`<div class="card"><h2>🎼 مكتبة hussein piano</h2>
+<p>أضف مقطوعاتك الخاصة. اكتب النوت مفصولة بمسافات مثل <b dir="ltr">C4 D4 E4:2</b> (الرقم بعد النقطتين = عدد الضربات، R = سكوت، + = أكورد، # = دييز، b = بيمول)، أو ارفع ملف MIDI أو نص أو JSON حمّلته من الإنترنت.</p>
+<input id="hnm" class="inp" placeholder="اسم المقطوعة">
+<textarea id="hn" class="inp" rows="4" dir="ltr" placeholder="C4 D4 E4:2 ... أو الصق JSON لاستيراد مكتبة"></textarea>
+<div class="demos"><button class="btn p" data-act="hsave">💾 حفظ</button><label class="btn">📂 رفع ملف<input type="file" id="hf" accept=".mid,.midi,.txt,.json" hidden></label><button class="btn" data-act="hexp">📤 تصدير مكتبتي</button></div>
+<div class="st" id="hmsg"></div></div>`;
+document.addEventListener('change',async e=>{if(e.target.id!='hf')return;const f=e.target.files[0];if(!f)return;const n0=f.name.replace(/\.[^.]+$/,'');
+try{if(/\.midi?$/i.test(f.name)){const r=midi(await f.arrayBuffer());imp(r.s,$('hnm').value.trim()||n0,r.b)}else imp((await f.text()).trim(),$('hnm').value.trim()||n0)}catch(err){hm('تعذّر قراءة الملف','bad')}e.target.value=''});
+(function(){const r=$('ring');[60,62,64,65,67,69,71].forEach((m,i)=>{const e=document.createElement('i');e.style.setProperty('--i',i);e.textContent=AR[i];e.setAttribute('role','button');e.tabIndex=0;
+const go=()=>{const s=start(m),k=KB[m];k.classList.add('on');setTimeout(()=>{s();k.classList.remove('on')},600)};
+e.onclick=go;e.onkeydown=ev=>{if(ev.key=='Enter'||ev.key==' '){ev.preventDefault();go()}};r.appendChild(e)})})();
+$('tg').onclick=()=>{const r=document.documentElement,d=r.dataset.theme?r.dataset.theme=='dark':matchMedia('(prefers-color-scheme:dark)').matches;r.dataset.theme=d?'light':'dark'};
+if(matchMedia('(hover:hover)').matches){$('main').addEventListener('pointermove',e=>{const c=e.target.closest('.card');if(!c)return;const b=c.getBoundingClientRect();c.style.setProperty('--ry',((e.clientX-b.left)/b.width-.5)*5+'deg');c.style.setProperty('--rx',(.5-(e.clientY-b.top)/b.height)*5+'deg')});
+$('main').addEventListener('pointerout',e=>{const c=e.target.closest('.card');if(c&&!c.contains(e.relatedTarget)){c.style.setProperty('--rx','0deg');c.style.setProperty('--ry','0deg')}})}
+(function(){const cv=$('bg'),x=cv.getContext('2d');if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;let w,h;const ps=[],G=['♪','♫','♩','♬'];
+const rs=()=>{w=cv.width=innerWidth;h=cv.height=innerHeight};rs();addEventListener('resize',rs);
+for(let i=0;i<22;i++)ps.push({x:Math.random()*w,y:Math.random()*h,s:14+Math.random()*26,v:.15+Math.random()*.35,g:G[i%4],p:Math.random()*6});
+(function f(t){x.clearRect(0,0,w,h);x.fillStyle=getComputedStyle(document.documentElement).getPropertyValue('--ac');x.globalAlpha=.13;
+ps.forEach(p=>{p.y-=p.v;if(p.y<-40){p.y=h+40;p.x=Math.random()*w}x.font=p.s+'px serif';x.fillText(p.g,p.x+Math.sin(t/1500+p.p)*18,p.y)});requestAnimationFrame(f)})(0)})();
+(function(){const p=$('piano'),cur={},kw=()=>KB[48].offsetWidth;
+const at=(x,y)=>{const e=document.elementFromPoint(x,y),k=e&&e.closest('.k');return k?+k.dataset.m:null};
+p.addEventListener('pointerdown',e=>{const k=e.target.closest('.k');if(!k)return;e.preventDefault();const m=+k.dataset.m;cur[e.pointerId]=m;press(m)});
+p.addEventListener('pointermove',e=>{const c=cur[e.pointerId];if(c===undefined)return;const m=at(e.clientX,e.clientY);if(m!==null&&m!==c){release(c);cur[e.pointerId]=m;press(m,1)}});
+const up=e=>{const c=cur[e.pointerId];if(c!==undefined){release(c);delete cur[e.pointerId]}};
+['pointerup','pointercancel'].forEach(v=>addEventListener(v,up));
+$('sl').onclick=()=>$('sc').scrollBy({left:-7*kw(),behavior:'smooth'});
+$('sr').onclick=()=>$('sc').scrollBy({left:7*kw(),behavior:'smooth'});
+$('zm').onclick=()=>{document.body.classList.toggle('big');$('sc').scrollLeft=7*kw()-20};
+$('sc').scrollLeft=7*kw()-20})();
+$('piano').addEventListener('contextmenu',e=>e.preventDefault());
+const shuf=()=>[0,1,2,3].sort(()=>Math.random()-.5);
+let T={lv:null,i:0,s:0,sel:-1,o:[0,1,2,3]},best={},pd={};
+try{best=JSON.parse(localStorage.getItem('hp_best')||'{}');pd=JSON.parse(localStorage.getItem('hp_plan')||'{}')}catch(e){}
+const TB={'مبتدئ':[['كم عدد النوت الأساسية في السلم الموسيقي؟',['7','5','8','12']],['أي نوت تقع قبل المفتاحين الأسودين مباشرة؟',['دو','ري','سي','صول']],['كم ضربة تستغرق النوت البيضاء؟',['ضربتان','ضربة واحدة','3 ضربات','4 ضربات']],['ما صيغة السلم الكبير؟',['طون طون نصف طون طون طون نصف','طون نصف طون طون نصف طون طون','نصف طون طون نصف طون طون طون','طون طون طون نصف طون طون نصف']],['ماذا يفعل الدييز ♯؟',['يرفع النوت نصف درجة','يخفضها نصف درجة','يطيل مدتها','يجعلها سكوتاً']],['حول أي خط يلتف مفتاح صول؟',['الخط الثاني','الخط الأول','الخط الثالث','الخط الخامس']]],
+'متوسط':[['كم دييزاً في سلم صول الكبير؟',['واحد (فا♯)','لا يوجد','اثنان','ثلاثة']],['ما نوع الأكورد دو–مي–صول؟',['كبير','صغير','متناقص','زائد']],['كم نصف طون في الثالثة الصغيرة؟',['3','2','4','5']],['ما اسم القفلة V–I؟',['كاملة','بلاغالية','مخادعة','معلّقة']],['ما الأكورد vi في سلم دو الكبير؟',['لا صغير','ري صغير','سي متناقص','مي صغير']],['ما نوتات الأكورد Cmaj7؟',['دو مي صول سي','دو مي صول سي♭','دو مي♭ صول سي♭','دو فا صول']]],
+'احترافي':[['أي سلم يمثل نمط الدورياني على الري؟',['ري مي فا صول لا سي دو','ري مي فا♯ صول لا سي دو♯','ري مي♭ فا صول لا سي♭ دو','ري مي فا صول لا سي♭ دو']],['أي أكورد هو الدومينانت السباعي على دو؟',['C7','Cmaj7','Cm7','Cdim']],['ما تتابع ii–V–I في دو الكبير؟',['Dm7 – G7 – Cmaj7','Em7 – A7 – Dmaj7','Fm7 – B♭7 – E♭maj7','Cm7 – F7 – B♭maj7']],['بماذا يتميز النمط الليدي؟',['رابعة زائدة','سابعة صغيرة','ثانية صغيرة','سادسة صغيرة']],['ماذا يضيف سلم البلوز إلى الخماسي الصغير؟',['الدرجة ♭5','الدرجة 2','الدرجة 6','الدرجة 7 الكبيرة']],['بماذا يستبدل الأكورد sus4 الثالثة؟',['الرابعة','الثانية','السادسة','التاسعة']]]};
+function testView(){const Qs=T.lv&&TB[T.lv];
+if(!T.lv)return `<div class="card"><h2>📝 اختبارات المستويات</h2><p>اختر مستواك وأجب عن 6 أسئلة. تُحفظ أفضل نتيجة لك.</p><div class="demos">${Object.keys(TB).map(l=>`<button class="btn p" data-act="tstart" data-l="${l}">${l}${best[l]!=null?' · أفضل: '+best[l]+'/6':''}</button>`).join('')}</div></div>`;
+if(T.i>=Qs.length)return `<div class="card"><h2>النتيجة: ${T.s} من ${Qs.length}</h2><p>${T.s>=5?'ممتاز! أنت جاهز للمستوى التالي.':T.s>=3?'جيد، راجع الدروس التي أخطأت فيها ثم أعد المحاولة.':'أعد دراسة دروس هذا المستوى ثم حاول مرة أخرى.'}</p><div class="demos"><button class="btn p" data-act="tstart" data-l="${T.lv}">إعادة الاختبار</button><button class="btn" data-act="tmenu">القائمة</button></div></div>`;
+const q=Qs[T.i];
+return `<div class="card"><p class="note">${T.lv} · سؤال ${T.i+1} من ${Qs.length}</p><h2>${q[0]}</h2><div class="demos" style="flex-direction:column">${T.o.map(k=>`<button class="btn day ${T.sel>=0&&k==0?'p':''}" data-act="tans" data-i="${k}">${T.sel>=0?(k==0?'✓ ':k==T.sel?'✗ ':''):''}${q[1][k]}</button>`).join('')}</div>${T.sel>=0?`<div class="nav" aria-live="polite"><span class="${T.sel==0?'ok':'bad'}">${T.sel==0?'إجابة صحيحة!':'الإجابة الصحيحة: '+q[1][0]}</span><button class="btn p" data-act="tnext">${T.i+1>=Qs.length?'النتيجة':'التالي ←'}</button></div>`:''}</div>`}
+const PLAN=['درس 1 و2: النوت السبع والمدرج + اختبار قراءة النوت','درس 3: القيم الزمنية، وتدرّب مع المترونوم على 60','درس 4: سلم دو الكبير باليد اليمنى','سلم دو الكبير باليد اليسرى + درس 10 (الأصابع)','درس 5: السلم الصغير + تدريب «لمعي لمعي يا نجمة»','تدريب «نشيد الفرح» ببطء ثم بسرعة أكبر','مراجعة الأسبوع + اختبار المبتدئ','درس 6: الفواصل وتمييزها بالأذن','درس 7: الأكوردات الثلاثية (دو، فا، صول)','درس 8: I–IV–V–I على البيانو','درس 9: مقام الحجاز على الري','درس 11: دائرة الخامسات (سلم صول وري)','درس 12: السلالم الصغيرة الثلاثة','مراجعة + اختبار المتوسط (المحاولة الأولى)','درس 13 و14: الأكوردات السباعية وقلب الأكورد','درس 15: أكوردات درجات السلم','درس 16: مرافقة اليد اليسرى (باص ألبرتي)','درس 17: الإيقاعات المنقّطة والمتزامنة','درس 18: القفلات الأربع','درس 19: الديناميكيات والتعبير على مقطوعة تعرفها','مراجعة المتوسط + اختبار المتوسط مرة ثانية','درس 20: الأنماط الكنسية (دورياني وميكسوليدي)','درس 21 و22: الخماسية والبلوز والسلالم المتناظرة','درس 23: التحول بين السلالم','درس 24: التسعات والأكوردات المعلّقة','درس 25: ii–V–I وبلوز 12 مازورة','درس 26: التقنية والأوكتافات بسرعة متزايدة','درس 28: تدريب الأذن وعزف لحن من السماع','درس 29: ألّف لحناً قصيراً واحفظه في مكتبة hussein piano','اختبار الاحترافي + اختر مقطوعتك من درس 30 وابدأ بها'];
+function planView(){const n=PLAN.filter((_,i)=>pd[i]).length;
+return `<div class="card"><h2>📅 خطة 30 يوماً للاحتراف</h2><p>20–30 دقيقة يومياً. اضغط على اليوم عند إنجازه.</p><div class="bar"><i style="width:${n/30*100}%"></i></div><p class="note">أنجزت ${n} من 30 يوماً</p>${PLAN.map((t,i)=>`<button class="btn day ${pd[i]?'p':''}" data-act="pday" data-i="${i}">${pd[i]?'✓ ':''}اليوم ${i+1}: ${t}</button>`).join('')}<div class="demos"><button class="btn" data-act="preset">إعادة ضبط الخطة</button></div></div>`}
+document.addEventListener('input',e=>{if(e.target.id=='mb'){M.bpm=+e.target.value;$('bv').textContent=M.bpm;if(M.on)mRun()}});
+render();
+</script>
+</body>
+</html>
